@@ -37,7 +37,7 @@ int main(void)
     int grade = roundf(index);
     if ((index >= 1) && (index < 16))
     {
-        printf("Grade: %i\n", grade);
+        printf("Grade %i\n", grade);
     }
     else if (index < 1)
     {
