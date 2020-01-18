@@ -35,7 +35,7 @@ int main(int argc, string argv[])
     printf("%i\n", key);
     //prompt the user for plaintext input
     string plaintext = get_string("plaintext: ");
-    //loop through plaintext string and if the string element is an alphabet letter, shift it by key position within alphabet letters
+    //loop through plaintext string and if the string element is an alphabet letter, shift it by key position within alphabet
     for (int i = 0, n = strlen(plaintext); i < n; i++)
     {
         if ((plaintext[i] >= 'a') && (plaintext[i] <= 'z'))
@@ -47,10 +47,7 @@ int main(int argc, string argv[])
             plaintext[i] = (((plaintext [i] - 'A') + key)) % 26 + 'A';
         }
     }
-    for (int i = 0, n = strlen(plaintext); i < n; i++)
-    {
-        printf("%c %i\n", plaintext[i], plaintext[i]);
-    }
+    printf("ciphertext: %s\n", plaintext);
 }
 
 
