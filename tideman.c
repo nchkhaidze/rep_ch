@@ -234,7 +234,6 @@ void print_winner(void)
         if (pointed_by_arrow == 0)
         {
             printf("%s\n", candidates[pairs[i].winner]);
-            break;
         }
     }
     return;
