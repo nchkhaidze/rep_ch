@@ -228,12 +228,12 @@ bool is_cycle(int w, int l)
 // Print the winner of the election
 void print_winner(void)
 {
-    for (int i = 0; i < pair_count; i++)
+    for (int i = 0; i < candidate_count; i++)
     {
         int pointed_by_arrow = 0;
         for (int j = 0; j < candidate_count; j++)
         {
-            if (locked[j][pairs[i].winner])
+            if (locked[j][i])
             {
                 pointed_by_arrow++;
                 break;
