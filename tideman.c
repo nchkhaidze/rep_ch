@@ -32,6 +32,7 @@ void record_preferences(int ranks[]);
 void add_pairs(void);
 void sort_pairs(void);
 void lock_pairs(void);
+bool is_cycle(int w, int l);
 void print_winner(void);
 
 int main(int argc, string argv[])
@@ -196,23 +197,32 @@ void lock_pairs(void)
 {
     for (int i = 0; i < pair_count; i++)
     {
-        for (int j = 0; j < candidate_count; j++)
+        if (!is_cycle(pairs[i].winner, pairs[i].loser))
         {
-            if (locked[pairs[i].loser][j])
-            {
-                if (locked[j][pairs[i].winner])
-                {
-                    break;
-                }
-            }
-            else
-            {
-                locked[pairs[i].winner][pairs[i].loser] = true;
-                printf("%i is locked over %i\n", pairs[i].winner, pairs[i].loser);
-            }
+            locked[pairs[i].winner][pairs[i].loser] = true;
+            printf("%i is locked into %i\n", pairs[i].winner, pairs[i].loser);
         }
     }
     return;
+}
+
+bool is_cycle(int w, int l)
+{
+    if (locked[l][w] == true)
+    {
+        return true;
+    }
+    for (int j = 0; j < candidate_count; j++)
+    {
+        if (locked[j][w] == true)
+        {
+            if (is_cycle(j, l))
+            {
+                return true;
+            }
+        }
+    }
+    return false;
 }
 
 // Print the winner of the election
