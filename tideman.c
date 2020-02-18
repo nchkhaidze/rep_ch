@@ -196,24 +196,19 @@ void lock_pairs(void)
 {
     for (int i = 0; i < pair_count; i++)
     {
-        int cycle = 0;
-        for (int j = 0; j < pair_count; j++)
+        for (int j = 0; j < candidate_count; j++)
         {
-            if (locked[pairs[i].loser][j])
+            if (locked[pairs[i].loser][j] && locked[j][pairs[i].winner])
             {
-                if (locked[j][pairs[i].winner])
-                {
-                    cycle++;
-                }
+                break;
+            }
+            else
+            {
+                locked[pairs[i].winner][pairs[i].loser] = true;
+                printf("%i is locked over %i\n", pairs[i].winner, pairs[i].loser);
             }
         }
-        if (cycle == 0)
-        {
-            locked[pairs[i].winner][pairs[i].loser] = true;
-            printf("%i is locked with %i\n", pairs[i].winner, pairs[i].loser);
-        }
     }
-
     return;
 }
 
