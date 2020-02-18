@@ -236,13 +236,11 @@ void print_winner(void)
             if (locked[j][i])
             {
                 source = false;
-                break;
             }
         }
         if (source == true)
         {
             printf("%s\n", candidates[pairs[i].winner]);
-            break;
         }
     }
     return;
