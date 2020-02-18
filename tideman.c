@@ -242,6 +242,7 @@ void print_winner(void)
         if (source == true)
         {
             printf("%s\n", candidates[pairs[i].winner]);
+            break;
         }
     }
     return;
