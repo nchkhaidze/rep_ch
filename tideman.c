@@ -230,19 +230,18 @@ void print_winner(void)
 {
     for (int i = 0; i < candidate_count; i++)
     {
-        int pointed_by_arrow = false;
+        bool source = true;
         for (int j = 0; j < candidate_count; j++)
         {
             if (locked[j][i])
             {
-                pointed_by_arrow = true;
+                source = false;
                 break;
             }
         }
-        if (pointed_by_arrow == false)
+        if (source == true)
         {
             printf("%s\n", candidates[pairs[i].winner]);
-            break;
         }
     }
     return;
