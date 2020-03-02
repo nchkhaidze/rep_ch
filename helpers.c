@@ -60,10 +60,6 @@ void reflect(int height, int width, RGBTRIPLE image[height][width])
         for (int w = 0; w <= (width / 2); w++)
         {
             RGBTRIPLE first = image[h][w];
-            if (first.rgbtRed == image[h][width - w].rgbtRed && first.rgbtGreen == image[h][width - w].rgbtGreen && first.rgbtBlue == image[h][width - w].rgbtBlue)
-            {
-                break;
-            }
             image[h][w] = image[h][width - w];
             image[h][width - w] = first;
         }
