@@ -72,9 +72,9 @@ void reflect(int height, int width, RGBTRIPLE image[height][width])
 // Blur image
 void blur(int height, int width, RGBTRIPLE image[height][width])
 {
-    for (int h = 0; h < height; h++)
+    for (int h = 0; h < height - 1; h++)
     {
-        for (int w = 0; w < width; w++)
+        for (int w = 0; w < width - 1; w++)
         {
             int neighbor_count = 0;
             RGBTRIPLE neighbors[9];
@@ -89,6 +89,8 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
                     neighbor_count++;
                 }
             }
+            if (w == 0) {
+                printf("neighbor count %i\n", neighbor_count);}
             int average[3] = {0, 0, 0};
             for (int i = 0; i < neighbor_count; i++)
             {
@@ -109,7 +111,6 @@ bool in_bounds(int h, int w, int height, int width)
 {
     if (((h < 0) || (w < 0)) || ((h > height) || (w > width)))
     {
-        printf("false\n ");
         return false;
     }
     return true;
