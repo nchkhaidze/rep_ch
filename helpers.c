@@ -57,11 +57,12 @@ void reflect(int height, int width, RGBTRIPLE image[height][width])
 {
     for (int h = 0; h < height; h++)
     {
-        for (int w = 0; w < width; w++)
+        int halfwidth = round((float)0.5 * width);
+        for (int w = 0; w < halfwidth; w++)
         {
             RGBTRIPLE first = image[h][w];
-            image[h][w] = image[h][width - w];
-            image[h][width - w] = first;
+            image[h][w] = image[h][width - 1 - w];
+            image[h][width - 1 - w] = first;
         }
     }
     return;
