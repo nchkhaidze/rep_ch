@@ -2,6 +2,7 @@
 #include <math.h>
 #include <stdbool.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 bool in_bounds(int h, int w, int height, int width);
 
@@ -75,8 +76,8 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
     {
         for (int w = 0; w < width; w++)
         {
-            RGBTRIPLE neighbors[9];
             int neighbor_count = 0;
+            RGBTRIPLE neighbors[9];
             for (int hn = -1; hn < 2; hn++)
             {
                 for (int wn = -1; wn < 2; wn++)
