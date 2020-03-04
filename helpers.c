@@ -73,6 +73,7 @@ void reflect(int height, int width, RGBTRIPLE image[height][width])
 // Blur image
 void blur(int height, int width, RGBTRIPLE image[height][width])
 {
+    //create a copy of the original image so that already filtered pixels do not affect the unfiltered ones
     RGBTRIPLE(*original)[width] = calloc(height, width * sizeof(RGBTRIPLE));
     if (original == NULL)
     {
@@ -80,21 +81,30 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
         return;
     }
     memcpy(original, image, (height * width * sizeof(RGBTRIPLE)));
+
+    //scroll through every pixel
+    const int max_neighbors = 9;
     for (int h = 0; h < height; h++)
     {
         for (int w = 0; w < width; w++)
         {
+            //find neighbors of a pixel and put them into array
             int neighbor_count = 0;
-            RGBTRIPLE neighbors[9];
+            RGBTRIPLE neighbors[max_neighbors];
             for (int hn = -1; hn < 2; hn++)
             {
                 for (int wn = -1; wn < 2; wn++)
-                if (in_bounds((h + hn),(w + wn), height, width))
                 {
-                    neighbors[neighbor_count] = original[h + hn][w + wn];
-                    neighbor_count++;
+                    //check if the neighbor pixels are within bounds
+                    if (in_bounds((h + hn), (w + wn), height, width))
+                    {
+                        neighbors[neighbor_count] = original[h + hn][w + wn];
+                        neighbor_count++;
+                    }
                 }
             }
+            
+            //calculate rgb values based on neighbors
             float average[3] = {0, 0, 0};
             for (int i = 0; i < neighbor_count; i++)
             {
@@ -112,6 +122,7 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
     return;
 }
 
+//check if the neighbor pixel is in bounds
 bool in_bounds(int h, int w, int height, int width)
 {
     if (((h < 0) || (w < 0)) || ((h > height - 1) || (w > width - 1)))
