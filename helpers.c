@@ -95,7 +95,7 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
                     neighbor_count++;
                 }
             }
-            float average[3] = {0, 0, 0};
+            int average[3] = {0, 0, 0};
             for (int i = 0; i < neighbor_count; i++)
             {
                 average[0] = round(average[0] + (float)neighbors[i].rgbtRed);
