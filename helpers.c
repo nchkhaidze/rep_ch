@@ -99,8 +99,8 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
             for (int i = 0; i < neighbor_count; i++)
             {
                 average[0] = round(average[0] + (float)neighbors[i].rgbtRed);
-                average[1] = round(average[0] + (float)neighbors[i].rgbtRed);
-                average[2] = round(average[0] + (float)neighbors[i].rgbtRed);
+                average[1] = round(average[1] + (float)neighbors[i].rgbtRed);
+                average[2] = round(average[2] + (float)neighbors[i].rgbtRed);
             }
             image[h][w].rgbtRed = average[0] / neighbor_count;
             image[h][w].rgbtGreen = average[1] / neighbor_count;
