@@ -3,6 +3,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 bool in_bounds(int h, int w, int height, int width);
 
@@ -72,9 +73,16 @@ void reflect(int height, int width, RGBTRIPLE image[height][width])
 // Blur image
 void blur(int height, int width, RGBTRIPLE image[height][width])
 {
-    for (int h = 0; h < height - 1; h++)
+    RGBTRIPLE(*original)[width] = calloc(height, width * sizeof(RGBTRIPLE));
+    if (original == NULL)
     {
-        for (int w = 0; w < width - 1; w++)
+        fprintf(stderr, "Not enough memory to store image\n");
+        return;
+    }
+    memcpy(original, image, (height * width * sizeof(RGBTRIPLE)));
+    for (int h = 0; h < height; h++)
+    {
+        for (int w = 0; w < width; w++)
         {
             int neighbor_count = 0;
             RGBTRIPLE neighbors[9];
@@ -83,14 +91,10 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
                 for (int wn = -1; wn < 2; wn++)
                 if (in_bounds((h + hn),(w + wn), height, width))
                 {
-                    neighbors[neighbor_count].rgbtRed = image[h + hn][w + wn].rgbtRed;
-                    neighbors[neighbor_count].rgbtGreen = image[h + hn][w + wn].rgbtGreen;
-                    neighbors[neighbor_count].rgbtBlue = image[h + hn][w + wn].rgbtBlue;
+                    neighbors[neighbor_count] = original[h + hn][w + wn];
                     neighbor_count++;
                 }
             }
-            if (w == 0) {
-                printf("neighbor count %i\n", neighbor_count);}
             int average[3] = {0, 0, 0};
             for (int i = 0; i < neighbor_count; i++)
             {
@@ -103,13 +107,14 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
             image[h][w].rgbtBlue = average[2] / neighbor_count;
         }
     }
+    free(*original);
 
     return;
 }
 
 bool in_bounds(int h, int w, int height, int width)
 {
-    if (((h < 0) || (w < 0)) || ((h > height) || (w > width)))
+    if (((h < 0) || (w < 0)) || ((h > height - 1) || (w > width - 1)))
     {
         return false;
     }
