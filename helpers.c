@@ -112,11 +112,8 @@ void edges(int height, int width, RGBTRIPLE image[height][width])
         return;
     }
     memcpy(original, image, (height * width * sizeof(RGBTRIPLE)));
-    return;
 
     //scroll through every pixel
-    int Gx[3] = {0, 0, 0};
-    int Gy[3] = {0, 0, 0};
     int Gx_kernel[9] = {-1, 0, 1, -2, 0, 2, -1, 0, 1};
     int Gy_kernel[9] = {-1, -2, -1, 0, 0, 0, 1, 2, 1};
     for (int h = 0; h < height; h++)
@@ -124,6 +121,8 @@ void edges(int height, int width, RGBTRIPLE image[height][width])
         for (int w = 0; w < width; w++)
         {
             int kernel_count = 0;
+            int Gx[3] = {0, 0, 0};
+            int Gy[3] = {0, 0, 0};
             for (int hn = -1; hn < 2; hn++)
             {
                 for (int wn = -1; wn < 2; wn++)
