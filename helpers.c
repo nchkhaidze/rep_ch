@@ -114,8 +114,10 @@ void edges(int height, int width, RGBTRIPLE image[height][width])
     memcpy(original, image, (height * width * sizeof(RGBTRIPLE)));
 
     //scroll through every pixel
-    int Gx_kernel[9] = {-1, 0, 1, -2, 0, 2, -1, 0, 1};
-    int Gy_kernel[9] = {-1, -2, -1, 0, 0, 0, 1, 2, 1};
+    const int max_neighbors = 9;
+    //arrays with kernel values correspond to the order of checking neighbor pixels
+    int Gx_kernel[max_neighbors] = {-1, 0, 1, -2, 0, 2, -1, 0, 1};
+    int Gy_kernel[max_neighbors] = {-1, -2, -1, 0, 0, 0, 1, 2, 1};
     for (int h = 0; h < height; h++)
     {
         for (int w = 0; w < width; w++)
@@ -127,12 +129,14 @@ void edges(int height, int width, RGBTRIPLE image[height][width])
             {
                 for (int wn = -1; wn < 2; wn++)
                 {
+                    //for each neighbor of a pixel, check if it is within bounds
                     if (!in_bounds((h + hn), (w + wn), height, width))
                     {
                         kernel_count++;
                     }
                     else
                     {
+                        // if it is, add it to the weighted sum, otherwise skip and increase counter
                         Gx[0] = Gx[0] + (original[h + hn][w + wn].rgbtRed * Gx_kernel[kernel_count]);
                         Gx[1] = Gx[1] + (original[h + hn][w + wn].rgbtGreen * Gx_kernel[kernel_count]);
                         Gx[2] = Gx[2] + (original[h + hn][w + wn].rgbtBlue * Gx_kernel[kernel_count]);
@@ -146,6 +150,7 @@ void edges(int height, int width, RGBTRIPLE image[height][width])
 
                 }
             }
+            //check the final channel value and cap if necessary
             double check_cap = sqrt(pow(Gx[0], 2) + pow(Gy[0], 2));
             if (check_cap > 255)
             {
