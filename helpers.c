@@ -151,21 +151,21 @@ void edges(int height, int width, RGBTRIPLE image[height][width])
             {
                 check_cap = 255;
             }
-            image[h][w].rgbtRed = (int)check_cap;
+            image[h][w].rgbtRed = round(check_cap);
 
             check_cap = sqrt(pow(Gx[1], 2) + pow(Gy[1], 2));
             if (check_cap > 255)
             {
                 check_cap = 255;
             }
-            image[h][w].rgbtGreen = (int)check_cap;
+            image[h][w].rgbtGreen = round(check_cap);
 
             check_cap = sqrt(pow(Gx[2], 2) + pow(Gy[2], 2));
             if (check_cap > 255)
             {
                 check_cap = 255;
             }
-            image[h][w].rgbtBlue = (int)check_cap;
+            image[h][w].rgbtBlue = round(check_cap);
         }
     }
 }
