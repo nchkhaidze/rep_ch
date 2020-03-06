@@ -113,11 +113,10 @@ void edges(int height, int width, RGBTRIPLE image[height][width])
     }
     memcpy(original, image, (height * width * sizeof(RGBTRIPLE)));
 
-    //scroll through every pixel
-    const int max_neighbors = 9;
     //arrays with kernel values correspond to the order of checking neighbor pixels
-    int Gx_kernel[max_neighbors] = {-1, 0, 1, -2, 0, 2, -1, 0, 1};
-    int Gy_kernel[max_neighbors] = {-1, -2, -1, 0, 0, 0, 1, 2, 1};
+    int Gx_kernel[9] = {-1, 0, 1, -2, 0, 2, -1, 0, 1};
+    int Gy_kernel[9] = {-1, -2, -1, 0, 0, 0, 1, 2, 1};
+    //scroll through every pixel
     for (int h = 0; h < height; h++)
     {
         for (int w = 0; w < width; w++)
