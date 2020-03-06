@@ -130,17 +130,20 @@ void edges(int height, int width, RGBTRIPLE image[height][width])
                     if (!in_bounds((h + hn), (w + wn), height, width))
                     {
                         kernel_count++;
-                        break;
                     }
-                    Gx[0] = Gx[0] + (original[h + hn][w + wn].rgbtRed * Gx_kernel[kernel_count]);
-                    Gx[1] = Gx[1] + (original[h + hn][w + wn].rgbtGreen * Gx_kernel[kernel_count]);
-                    Gx[2] = Gx[2] + (original[h + hn][w + wn].rgbtBlue * Gx_kernel[kernel_count]);
+                    else
+                    {
+                        Gx[0] = Gx[0] + (original[h + hn][w + wn].rgbtRed * Gx_kernel[kernel_count]);
+                        Gx[1] = Gx[1] + (original[h + hn][w + wn].rgbtGreen * Gx_kernel[kernel_count]);
+                        Gx[2] = Gx[2] + (original[h + hn][w + wn].rgbtBlue * Gx_kernel[kernel_count]);
 
-                    Gy[0] = Gy[0] + (original[h + hn][w + wn].rgbtRed * Gy_kernel[kernel_count]);
-                    Gy[1] = Gy[1] + (original[h + hn][w + wn].rgbtGreen * Gy_kernel[kernel_count]);
-                    Gy[2] = Gy[2] + (original[h + hn][w + wn].rgbtBlue * Gy_kernel[kernel_count]);
+                        Gy[0] = Gy[0] + (original[h + hn][w + wn].rgbtRed * Gy_kernel[kernel_count]);
+                        Gy[1] = Gy[1] + (original[h + hn][w + wn].rgbtGreen * Gy_kernel[kernel_count]);
+                        Gy[2] = Gy[2] + (original[h + hn][w + wn].rgbtBlue * Gy_kernel[kernel_count]);
 
-                    kernel_count++;
+                        kernel_count++;
+                    }
+
                 }
             }
             double check_cap = sqrt(pow(Gx[0], 2) + pow(Gy[0], 2));
