@@ -129,7 +129,6 @@ void edges(int height, int width, RGBTRIPLE image[height][width])
                 {
                     if (!in_bounds(h + hn, w + wn, height, width))
                     {
-                        printf("out of bounds\n");
                         kernel_count++;
                         break;
                     }
