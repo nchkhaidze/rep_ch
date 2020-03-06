@@ -94,7 +94,7 @@ void blur(int height, int width, RGBTRIPLE image[height][width])
 //check if the neighbor pixel is in bounds
 bool in_bounds(int h, int w, int height, int width)
 {
-    if (((h < 0) || (w < 0)) || ((h > height) || (w > width)))
+    if (((h < 0) || (w < 0)) || ((h > height - 1) || (w > width - 1)))
     {
         return false;
     }
@@ -127,7 +127,7 @@ void edges(int height, int width, RGBTRIPLE image[height][width])
             {
                 for (int wn = -1; wn < 2; wn++)
                 {
-                    if (!in_bounds(h + hn, w + wn, height, width))
+                    if (!in_bounds((h + hn), (w + wn), height, width))
                     {
                         kernel_count++;
                         break;
