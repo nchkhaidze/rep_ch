@@ -21,7 +21,7 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    //initialize counter for jpeg images, open stream for writing
+    //initialize counter for jpeg images, output file pointer
     int jpeg_count = 0;
     char jpeg[8];
     FILE *out_file;
@@ -32,14 +32,16 @@ int main(int argc, char *argv[])
 
     while (fread(&buffer, 1, 512, in_file) == 512)
     {
+        //check if the first bytes are jpeg signature
         if (buffer[0] == 0xff && buffer[1] == 0xd8 && buffer[2] == 0xff && ((buffer[3] & 0xe0) == 0xe0))
         {
-
+            //if this is not the first jpeg, close the previous file stream
             if (jpeg_count)
             {
                 fclose(out_file);
             }
 
+            //open file for writing
             sprintf(jpeg, "%03i.jpg", jpeg_count);
             out_file = fopen(jpeg, "w");
             if (out_file == NULL)
@@ -51,6 +53,8 @@ int main(int argc, char *argv[])
 
             jpeg_count++;
         }
+
+        //if any jpegs were found, start writing to file
         if (jpeg_count)
         {
             fwrite(&buffer, sizeof(BYTE), 512, out_file);
