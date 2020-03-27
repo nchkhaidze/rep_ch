@@ -86,7 +86,6 @@ bool load(const char *dictionary)
 
     char word[LENGTH + 1];
     unsigned int hash_code;
-    int collisions = 0;
     while (fscanf(dict, "%s", word) != EOF)
     {
         node* n = malloc(sizeof(node));
@@ -107,10 +106,8 @@ bool load(const char *dictionary)
         {
             n->next = table[hash_code];
             table[hash_code] = n;
-            collisions++;
         }
     }
-    printf("Collisions: %i\n", collisions);
     fclose(dict);
     return true;
 }
