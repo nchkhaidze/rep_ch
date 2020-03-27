@@ -16,5 +16,6 @@ bool load(const char *dictionary);
 unsigned int size(void);
 bool unload(void);
 unsigned int word_len(const char* word);
+void str_tolower(char* word, int len);
 
 #endif // DICTIONARY_H

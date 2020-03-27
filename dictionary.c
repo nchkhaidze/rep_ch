@@ -5,6 +5,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <strings.h>
+#include <ctype.h>
 
 #include "dictionary.h"
 
@@ -55,6 +56,8 @@ unsigned int hash(const char *word)
     char p[LENGTH + 1];
     strcpy(p, word);
     unsigned int len = word_len(p);
+
+    str_tolower(p, len);
     unsigned int h = 0;
     int i;
 
@@ -108,21 +111,47 @@ bool load(const char *dictionary)
         }
     }
     printf("Collisions: %i\n", collisions);
+    fclose(dict);
     return true;
 }
 
 // Returns number of words in dictionary if loaded else 0 if not yet loaded
 unsigned int size(void)
 {
-    // TODO
-    return 0;
+    int words = 0;
+    for (int i = 0; i < N; i++)
+    {
+        if (table[i] != NULL)
+        {
+            node* cursor = table[i];
+            while (cursor != NULL)
+            {
+                cursor = cursor->next;
+                words++;
+            }
+        }
+    }
+    return words;
 }
 
 // Unloads dictionary from memory, returning true if successful else false
 bool unload(void)
 {
-    // TODO
-    return false;
+    for (int i = 0; i < N; i++)
+    {
+        if (table[i] != NULL)
+        {
+            node* tmp = table[i];
+            node* cursor = table[i];
+            while (cursor != NULL)
+            {
+                cursor = cursor->next;
+                free(tmp);
+                tmp = cursor;
+            }
+        }
+    }
+    return true;
 }
 
 unsigned int word_len(const char* word)
@@ -134,4 +163,12 @@ unsigned int word_len(const char* word)
     }
     return i;
 
+}
+
+void str_tolower(char* word, int len)
+{
+    for (int i = 0; i < len; i++)
+    {
+        word[i] = tolower(word[i]);
+    }
 }
