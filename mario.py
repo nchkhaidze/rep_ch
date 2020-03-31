@@ -5,9 +5,6 @@ while True:
     if number > 0 and number < 9:
         break
 for i in range(1, number + 1, 1):
-    print(" " * (number - i), end = "")
-    print("#" * i, end = "  ")
+    print(" " * (number - i), end="")
+    print("#" * i, end="  ")
     print("#" * i)
-
-
-
