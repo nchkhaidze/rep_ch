@@ -22,6 +22,8 @@ def main(argv):
             print(lists[0])
             return
     print("No match")
+    database_file.close()
+    sequence_file.close()
 
 
 # compute the longest run of consecutive STR repeats
