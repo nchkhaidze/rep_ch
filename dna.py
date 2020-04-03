@@ -8,22 +8,24 @@ def main(argv):
         print("Usage: dna.py database.csv sequence.txt")
     database_file = open(argv[1])
     database = list(csv.reader(database_file))
-
     sequence_file = open(argv[2])
     sequence = sequence_file.read()
-
     STR = database[0][1:]
+    database_file.close
+    sequence_file.close()
+
     # compute the longest run of consecutive STRs
     str_counts = compute_STR(sequence, STR)
     str_counts = [str(x) for x in str_counts]
+
     # find and print a matching STR set
+    found = False
     for lists in database:
         if lists[1:] == str_counts:
             print(lists[0])
-            return
-    print("No match")
-    database_file.close()
-    sequence_file.close()
+            found = True
+    if found == False:
+        print("No match")
 
 
 # compute the longest run of consecutive STR repeats
